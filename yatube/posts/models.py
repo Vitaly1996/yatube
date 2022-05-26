@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth import get_user_model
+
 User = get_user_model()
 
 
@@ -33,13 +34,14 @@ class Post(models.Model):
         blank=True, null=True,
         on_delete=models.SET_NULL,
         related_name='post_group',
-        verbose_name='group',
+        verbose_name='Группа',
         help_text='Группа, к которой будет относиться пост'
     )
     image = models.ImageField(
         verbose_name='Картинка',
         blank=True,
-        upload_to='posts/'
+        upload_to='posts/',
+        help_text='Добавьте картинку'
     )
 
     class Meta:
@@ -65,11 +67,26 @@ class Comment(models.Model):
     text = models.TextField(help_text='Введите комментарий к посту')
     created = models.DateTimeField(auto_now_add=True)
 
+    class Meta:
+        verbose_name = 'Комментарий'
+        verbose_name_plural = 'Комментарии'
+
+    def __str__(self):
+        return self.text[:10]
+
 
 class Follow(models.Model):
+    models.UniqueConstraint(fields=['user', 'author'], name='unique_following')
     user = models.ForeignKey(
         User, on_delete=models.CASCADE, related_name='follower'
     )
     author = models.ForeignKey(
         User, on_delete=models.CASCADE, related_name='following'
     )
+
+    class Meta:
+        verbose_name = 'Подписка'
+        verbose_name_plural = 'Подписки'
+
+    def __str__(self):
+        return self.author

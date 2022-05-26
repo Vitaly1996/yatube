@@ -1,8 +1,7 @@
-from django.test import TestCase
 from django.contrib.auth import get_user_model
+from django.test import TestCase
 
-
-from ..models import Post, Group
+from ..models import Group, Post
 
 User = get_user_model()
 
@@ -50,7 +49,7 @@ class PostsModelTest(TestCase):
             'text': 'Текст поста',
             'pub_date': 'Дата публикации',
             'author': 'Автор',
-            'group': 'group'
+            'group': 'Группа'
         }
         for field, expected in field_verboses.items():
             with self.subTest(field=field):
