@@ -8,7 +8,7 @@
 - Django ORM
 - SQlite3
 - nginx
-- pytest
+- unit testing
 
 ### Установка
 - склонировать репозиторий
